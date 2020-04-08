@@ -1,10 +1,10 @@
 <?php
 
-namespace Drupal\Composer\Plugin\Scaffold\Operations;
+namespace Mautic\Composer\Plugin\Scaffold\Operations;
 
 use Composer\IO\IOInterface;
-use Drupal\Composer\Plugin\Scaffold\ScaffoldFilePath;
-use Drupal\Composer\Plugin\Scaffold\ScaffoldOptions;
+use Mautic\Composer\Plugin\Scaffold\ScaffoldFilePath;
+use Mautic\Composer\Plugin\Scaffold\ScaffoldOptions;
 
 /**
  * Joins two operations on the same file into a single operation.
@@ -16,22 +16,22 @@ class ConjunctionOp extends AbstractOperation {
   /**
    * The first operation.
    *
-   * @var \Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface
+   * @var \Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface
    */
   protected $firstOperation;
 
   /**
    * The second operation.
    *
-   * @var \Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface
+   * @var \Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface
    */
   protected $secondOperation;
 
   /**
    * ConjunctionOp constructor.
    *
-   * @param \Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface $first_operation
-   * @param \Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface $second_operation
+   * @param \Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface $first_operation
+   * @param \Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface $second_operation
    */
   public function __construct(OperationInterface $first_operation, OperationInterface $second_operation) {
     $this->firstOperation = $first_operation;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Composer\Plugin\Scaffold;
+namespace Mautic\Composer\Plugin\Scaffold;
 
 use Composer\Composer;
 use Composer\Installer\PackageEvent;
@@ -10,8 +10,8 @@ use Composer\Package\PackageInterface;
 /**
  * Determine recursively which packages have been allowed to scaffold files.
  *
- * If the root-level composer.json allows drupal/core, and drupal/core allows
- * drupal/assets, then the later package will also implicitly be allowed.
+ * If the root-level composer.json allows mautic/core, and mautic/core allows
+ * mautic/assets, then the later package will also implicitly be allowed.
  *
  * @internal
  */
@@ -34,7 +34,7 @@ class AllowedPackages implements PostPackageEventListenerInterface {
   /**
    * Manager of the options in the top-level composer.json's 'extra' section.
    *
-   * @var \Drupal\Composer\Plugin\Scaffold\ManageOptions
+   * @var \Mautic\Composer\Plugin\Scaffold\ManageOptions
    */
   protected $manageOptions;
 
@@ -52,7 +52,7 @@ class AllowedPackages implements PostPackageEventListenerInterface {
    *   The composer object.
    * @param \Composer\IO\IOInterface $io
    *   IOInterface to write to.
-   * @param \Drupal\Composer\Plugin\Scaffold\ManageOptions $manage_options
+   * @param \Mautic\Composer\Plugin\Scaffold\ManageOptions $manage_options
    *   Manager of the options in the top-level composer.json's 'extra' section.
    */
   public function __construct(Composer $composer, IOInterface $io, ManageOptions $manage_options) {
@@ -64,8 +64,8 @@ class AllowedPackages implements PostPackageEventListenerInterface {
   /**
    * Gets a list of all packages that are allowed to copy scaffold files.
    *
-   * We will implicitly allow the projects 'drupal/legacy-scaffold-assets'
-   * and 'drupal/core' to scaffold files, if they are present. Any other
+   * We will implicitly allow the projects 'mautic/legacy-scaffold-assets'
+   * and 'mautic/core' to scaffold files, if they are present. Any other
    * project must be explicitly whitelisted in the top-level composer.json
    * file in order to be allowed to override scaffold files.
    * Configuration for packages specified later will override configuration
@@ -106,8 +106,8 @@ class AllowedPackages implements PostPackageEventListenerInterface {
   /**
    * Gets all packages that are allowed in the top-level composer.json.
    *
-   * We will implicitly allow the projects 'drupal/legacy-scaffold-assets'
-   * and 'drupal/core' to scaffold files, if they are present. Any other
+   * We will implicitly allow the projects 'mautic/legacy-scaffold-assets'
+   * and 'mautic/core' to scaffold files, if they are present. Any other
    * project must be explicitly whitelisted in the top-level composer.json
    * file in order to be allowed to override scaffold files.
    *
@@ -116,8 +116,7 @@ class AllowedPackages implements PostPackageEventListenerInterface {
    */
   protected function getTopLevelAllowedPackages() {
     $implicit_packages = [
-      'drupal/legacy-scaffold-assets',
-      'drupal/core',
+      'mautic/core'
     ];
     $top_level_packages = $this->manageOptions->getOptions()->allowedPackages();
     return array_merge($implicit_packages, $top_level_packages);
@@ -162,7 +161,7 @@ class AllowedPackages implements PostPackageEventListenerInterface {
   protected function evaluateNewPackages(array $allowed_packages) {
     foreach ($this->newPackages as $name => $newPackage) {
       if (!array_key_exists($name, $allowed_packages)) {
-        $this->io->write("Not scaffolding files for <comment>{$name}</comment>, because it is not listed in the element 'extra.drupal-scaffold.allowed-packages' in the root-level composer.json file.");
+        $this->io->write("Not scaffolding files for <comment>{$name}</comment>, because it is not listed in the element 'extra.mautic-scaffold.allowed-packages' in the root-level composer.json file.");
       }
       else {
         $this->io->write("Package <comment>{$name}</comment> has scaffold operations, and is already allowed in the root-level composer.json file.");

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Composer\Plugin\Scaffold;
+namespace Mautic\Composer\Plugin\Scaffold;
 
 use Composer\Plugin\Capability\CommandProvider as CommandProviderCapability;
 

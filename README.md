@@ -1,28 +1,28 @@
-# Drupal Composer Scaffold
+# Mautic Composer Scaffold
 
 This project provides a composer plugin for placing scaffold files (like
-`index.php`, `update.php`, …) from the `drupal/core` project into their desired
+`index.php`, `update.php`, …) from the `mautic/core` project into their desired
 location inside the web root. Only individual files may be scaffolded with this
 plugin.
 
-The purpose of scaffolding files is to allow Drupal sites to be fully managed by
+The purpose of scaffolding files is to allow Mautic sites to be fully managed by
 Composer, and still allow individual asset files to be placed in arbitrary
 locations. The goal of doing this is to enable a properly configured composer
 template to produce a file layout that exactly matches the file layout of a
-Drupal 8.7.x and earlier tarball distribution. Other file layouts will also be
+Mautic 3.x and earlier tarball distribution. Other file layouts will also be
 possible; for example, a project layout very similar to the current
-[drupal-composer/drupal-project](https://github.com/drupal-composer/drupal-scaffold)
+[nickveenhof/mautic-project](https://github.com/nickveenhof/mautic-scaffold)
 template will also be provided. When one of these projects is used, the user
-should be able to use `composer require` and `composer update` on a Drupal site
+should be able to use `composer require` and `composer update` on a Mautic site
 immediately after untarring the downloaded archive.
 
-Note that the dependencies of a Drupal site are only able to scaffold files if
+Note that the dependencies of a Mautic site are only able to scaffold files if
 explicitly granted that right in the top-level composer.json file. See
 [allowed packages](#allowed-packages), below.
 
 ## Usage
 
-Drupal Composer Scaffold is used by requiring `drupal/core-composer-scaffold` in your
+Mautic Composer Scaffold is used by requiring `nickveenhof/mautic-core-composer-scaffold` in your
 project, and providing configuration settings in the `extra` section of your
 project's composer.json file. Additional configuration from the composer.json
 file of your project's dependencies is also consulted in order to scaffold the
@@ -36,7 +36,7 @@ Typically, the scaffold operations run automatically as needed, e.g. after
 to scaffold a project once the configuration is set up in the project
 composer.json file, as described below. To scaffold files directly, run:
 ```
-composer drupal:scaffold
+composer mautic:scaffold
 ```
 
 ### Allowed Packages
@@ -48,14 +48,14 @@ their destination location. In order to prevent arbitrary dependencies from
 copying files via the scaffold mechanism, only those projects that are
 specifically permitted by the top-level project will be used to scaffold files.
 
-Example: Permit scaffolding from the project `drupal/core`
+Example: Permit scaffolding from the project `mautic/core`
 ```
   "name": "my/project",
   ...
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "allowed-packages": [
-        "drupal/core"
+        "mautic/core"
       ],
       ...
     }
@@ -64,13 +64,13 @@ Example: Permit scaffolding from the project `drupal/core`
 Allowing a package to scaffold files also permits it to delegate permission to
 scaffold to any project that it requires itself. This allows a package to
 organize its scaffold assets as it sees fit. For example, the project
-`drupal/core` may choose to store its assets in a subproject `drupal/assets`.
+`mautic/core` may choose to store its assets in a subproject `mautic/assets`.
 
 It is possible for a project to obtain scaffold files from multiple projects.
-For example, a Drupal project using a distribution, and installing on a specific
+For example, a Mautic project using a distribution, and installing on a specific
 web hosting service provider might take its scaffold files from:
 
-- Drupal core
+- Mautic core
 - Its distribution
 - A project provided by the hosting provider
 - The project itself
@@ -89,7 +89,7 @@ so via the `locations` mapping, as shown below:
   "name": "my/project",
   ...
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "locations": {
         "web-root": "./docroot"
       },
@@ -98,8 +98,8 @@ so via the `locations` mapping, as shown below:
   }
 ```
 This makes it possible to configure a project with different file layouts; for
-example, either the `drupal/drupal` file layout or the
-`drupal-composer/drupal-project` file layout could be used to set up a project.
+example, either the `mautic/mautic` file layout or the
+`nickveenhof/mautic-project` file layout could be used to set up a project.
 
 If a web-root is not explicitly defined, then it will default to `./`.
 
@@ -110,12 +110,12 @@ but alter it in some way. Two forms of alteration are supported: appending and
 patching.
 
 The example below shows a project that appends additional entries onto the end
-of the `robots.txt` file provided by `drupal/core`:
+of the `robots.txt` file provided by `mautic/core`:
 ```
   "name": "my/project",
   ...
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "file-mapping": {
         "[web-root]/robots.txt": {
           "append": "assets/my-robots-additions.txt",
@@ -128,13 +128,13 @@ It is also possible to prepend to a scaffold file instead of, or in addition to
 appending by including a "prepend" entry that provides the relative path to the
 file to prepend to the scaffold file.
 
-The example below demonstrates the use of the `post-drupal-scaffold-cmd` hook
+The example below demonstrates the use of the `post-mautic-scaffold-cmd` hook
 to patch the `.htaccess` file using a patch.
 ```
   "name": "my/project",
   ...
   "scripts": {
-    "post-drupal-scaffold-cmd": [
+    "post-mautic-scaffold-cmd": [
       "cd docroot && patch -p1 <../patches/htaccess-ssl.patch"
     ]
   }
@@ -149,10 +149,10 @@ the root project -- usually the web root. For example, the scaffold file
 web root in the snippet below.
 ```
 {
-  "name": "drupal/assets",
+  "name": "mautic/assets",
   ...
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "file-mapping": {
         "[web-root]/robots.txt": "assets/robots.txt",
         ...
@@ -171,7 +171,7 @@ setting the value for the scaffold file to exclude to `false`:
   "name": "my/project",
   ...
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "file-mapping": {
         "[web-root]/robots.txt": false
       }
@@ -191,9 +191,9 @@ file that will not be changed in subsequent updates. This can be done by setting
 the `overwrite` flag to `false`, as shown in the example below:
 ```
 {
-  "name": "service-provider/d8-scaffold-files",
+  "name": "service-provider/mautic-scaffold-files",
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "file-mapping": {
         "[web-root]/sites/default/settings.php": {
           "mode": "replace",
@@ -206,13 +206,13 @@ the `overwrite` flag to `false`, as shown in the example below:
 }
 ```
 Note that the `overwrite` directive is intended to be used by starter kits,
-service providers, and so on. Individual Drupal sites should exclude the file
+service providers, and so on. Individual Mautic sites should exclude the file
 by setting its value to false instead.
 
 ### Autoload File
 
 The scaffold tool automatically creates the required `autoload.php` file at the
-Drupal root as part of the scaffolding operation. This file should not be
+Mautic root as part of the scaffolding operation. This file should not be
 modified or customized in any way. If it is committed to the repository, though,
 then the scaffold tool will stop managing it. If the location of the `vendor`
 directory is changed for any reason, and the `autoload.php` file has been
@@ -221,7 +221,7 @@ to update it.
 
 ## Specifications
 
-Reference section for the configuration directives for the "drupal-scaffold"
+Reference section for the configuration directives for the "mautic-scaffold"
 section of the "extra" section of a `composer.json` file appear below.
 
 ### allowed-packages
@@ -230,7 +230,7 @@ The `allowed-packages` configuration setting contains an ordered list of package
 names that will be used during the scaffolding phase.
 ```
 "allowed-packages": [
-  "drupal/core",
+  "mautic/core",
 ],
 ```
 ### file-mapping
@@ -380,20 +380,20 @@ Sample composer.json for a project that relies on packages that use composer-sca
 {
   "name": "my/project",
   "require": {
-    "drupal/core-composer-scaffold": "*",
+    "nickveenhof/mautic-core-composer-scaffold": "*",
     "composer/installers": "^1.2",
     "cweagans/composer-patches": "^1.6.5",
-    "drupal/core": "^8.8.x-dev",
-    "service-provider/d8-scaffold-files": "^1"
+    "mautic/core": "3.x-dev",
+    "service-provider/mautic-3x-scaffold-files": "^1"
   },
   "config": {
     "optimize-autoloader": true,
     "sort-packages": true
   },
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "allowed-packages": [
-        "drupal/core"
+        "mautic/core"
       ],
       "locations": {
         "web-root": "./docroot"
@@ -409,28 +409,28 @@ Sample composer.json for a project that relies on packages that use composer-sca
 }
 ```
 
-Sample composer.json for drupal/core, with assets placed in a different project:
+Sample composer.json for mautic/core, with assets placed in a different project:
 
 ```
 {
-  "name": "drupal/core",
+  "name": "mautic/core",
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "allowed-packages": [
-        "drupal/assets",
+        "mautic/assets",
       ]
     }
   }
 }
 ```
 
-Sample composer.json for composer-scaffold files in drupal/assets:
+Sample composer.json for composer-scaffold files in mautic/assets:
 
 ```
 {
-  "name": "drupal/assets",
+  "name": "mautic/assets",
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "file-mapping": {
         "[web-root]/.csslintrc": "assets/.csslintrc",
         "[web-root]/.editorconfig": "assets/.editorconfig",
@@ -439,14 +439,9 @@ Sample composer.json for composer-scaffold files in drupal/assets:
         "[web-root]/.gitattributes": "assets/.gitattributes",
         "[web-root]/.ht.router.php": "assets/.ht.router.php",
         "[web-root]/.htaccess": "assets/.htaccess",
-        "[web-root]/sites/default/default.services.yml": "assets/default.services.yml",
-        "[web-root]/sites/default/default.settings.php": "assets/default.settings.php",
-        "[web-root]/sites/example.settings.local.php": "assets/example.settings.local.php",
-        "[web-root]/sites/example.sites.php": "assets/example.sites.php",
         "[web-root]/index.php": "assets/index.php",
+        "[web-root]/index.php": "assets/index_dev.php",
         "[web-root]/robots.txt": "assets/robots.txt",
-        "[web-root]/update.php": "assets/update.php",
-        "[web-root]/web.config": "assets/web.config"
       }
     }
   }
@@ -457,11 +452,11 @@ Sample composer.json for a library that implements composer-scaffold:
 
 ```
 {
-  "name": "service-provider/d8-scaffold-files",
+  "name": "service-provider/mautic-3x-scaffold-files",
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "file-mapping": {
-        "[web-root]/sites/default/settings.php": "assets/sites/default/settings.php"
+        "[web-root]/app/config/config_prod.php": "assets/app/config/config_prod.php"
       }
     }
   }
@@ -472,9 +467,9 @@ Append to robots.txt:
 
 ```
 {
-  "name": "service-provider/d8-scaffold-files",
+  "name": "service-provider/mautic-3x-scaffold-files",
   "extra": {
-    "drupal-scaffold": {
+    "mautic-scaffold": {
       "file-mapping": {
         "[web-root]/robots.txt": {
           "append": "assets/my-robots-additions.txt",
@@ -488,23 +483,12 @@ Append to robots.txt:
 Patch a file after it's copied:
 
 ```
-"post-drupal-scaffold-cmd": [
+"post-mautic-scaffold-cmd": [
   "cd docroot && patch -p1 <../patches/htaccess-ssl.patch"
 ]
 ```
 
 ## Related Plugins
-
-### drupal-composer/drupal-scaffold
-
-Previous versions of Drupal Composer Scaffold (see community project,
-[drupal-composer/drupal-scaffold](https://github.com/drupal-composer/drupal-project))
-downloaded each scaffold file directly from its distribution server (e.g.
-`https://git.drupalcode.org`) to the desired destination directory. This was
-necessary, because there was no subtree split of the scaffold files available.
-Copying the scaffold assets from projects already downloaded by Composer is more
-effective, as downloading and unpacking archive files is more efficient than
-downloading each scaffold file individually.
 
 ### composer/installers
 
@@ -513,7 +497,7 @@ similar to this plugin in that it allows dependencies to be installed in
 locations other than the `vendor` directory. However, Composer and the
 `composer/installers` plugin have a limitation that one project cannot be moved
 inside of another project. Therefore, if you use `composer/installers` to place
-Drupal modules inside the directory `web/modules/contrib`, then you cannot also
+Mautic modules inside the directory `web/modules/contrib`, then you cannot also
 use `composer/installers` to place files such as `index.php` and `robots.txt`
-into the `web` directory. The drupal-scaffold plugin was created to work around
+into the `web` directory. The mautic-scaffold plugin was created to work around
 this limitation.

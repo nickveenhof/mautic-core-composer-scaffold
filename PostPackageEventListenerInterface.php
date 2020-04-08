@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\Composer\Plugin\Scaffold;
+namespace Mautic\Composer\Plugin\Scaffold;
 
 use Composer\Installer\PackageEvent;
 
 /**
  * Interface for post package event listeners.
  *
- * @see \Drupal\Composer\Plugin\Scaffold\Handler::onPostPackageEvent
+ * @see \Mautic\Composer\Plugin\Scaffold\Handler::onPostPackageEvent
  *
  * @internal
  */

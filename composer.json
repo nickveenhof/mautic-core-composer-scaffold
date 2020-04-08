@@ -1,24 +1,21 @@
 {
-  "name": "drupal/core-composer-scaffold",
+  "name": "nickveenhof/mautic-core-composer-scaffold",
   "description": "A flexible Composer project scaffold builder.",
   "type": "composer-plugin",
-  "keywords": ["drupal"],
-  "homepage": "https://www.drupal.org/project/drupal",
+  "keywords": ["mautic"],
+  "homepage": "https://www.mautic.org",
   "license": "GPL-2.0-or-later",
   "require": {
     "composer-plugin-api": "^1.0.0",
     "php": ">=7.0.8"
   },
-  "conflict": {
-    "drupal-composer/drupal-scaffold": "*"
-  },
   "autoload": {
     "psr-4": {
-      "Drupal\\Composer\\Plugin\\Scaffold\\": ""
+      "Mautic\\Composer\\Plugin\\Scaffold\\": ""
     }
   },
   "extra": {
-    "class": "Drupal\\Composer\\Plugin\\Scaffold\\Plugin",
+    "class": "Mautic\\Composer\\Plugin\\Scaffold\\Plugin",
     "branch-alias": {
       "dev-master": "1.0.x-dev"
     }

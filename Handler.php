@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Composer\Plugin\Scaffold;
+namespace Mautic\Composer\Plugin\Scaffold;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventDispatcher;
@@ -9,9 +9,9 @@ use Composer\IO\IOInterface;
 use Composer\Package\PackageInterface;
 use Composer\Plugin\CommandEvent;
 use Composer\Util\Filesystem;
-use Drupal\Composer\Plugin\Scaffold\Operations\OperationData;
-use Drupal\Composer\Plugin\Scaffold\Operations\OperationFactory;
-use Drupal\Composer\Plugin\Scaffold\Operations\ScaffoldFileCollection;
+use Mautic\Composer\Plugin\Scaffold\Operations\OperationData;
+use Mautic\Composer\Plugin\Scaffold\Operations\OperationFactory;
+use Mautic\Composer\Plugin\Scaffold\Operations\ScaffoldFileCollection;
 
 /**
  * Core class of the plugin.
@@ -26,12 +26,12 @@ class Handler {
   /**
    * Composer hook called before scaffolding begins.
    */
-  const PRE_DRUPAL_SCAFFOLD_CMD = 'pre-drupal-scaffold-cmd';
+  const PRE_MAUTIC_SCAFFOLD_CMD = 'pre-mautic-scaffold-cmd';
 
   /**
    * Composer hook called after scaffolding completes.
    */
-  const POST_DRUPAL_SCAFFOLD_CMD = 'post-drupal-scaffold-cmd';
+  const POST_MAUTIC_SCAFFOLD_CMD = 'post-mautic-scaffold-cmd';
 
   /**
    * The Composer service.
@@ -50,21 +50,21 @@ class Handler {
   /**
    * The scaffold options in the top-level composer.json's 'extra' section.
    *
-   * @var \Drupal\Composer\Plugin\Scaffold\ManageOptions
+   * @var \Mautic\Composer\Plugin\Scaffold\ManageOptions
    */
   protected $manageOptions;
 
   /**
    * The manager that keeps track of which packages are allowed to scaffold.
    *
-   * @var \Drupal\Composer\Plugin\Scaffold\AllowedPackages
+   * @var \Mautic\Composer\Plugin\Scaffold\AllowedPackages
    */
   protected $manageAllowedPackages;
 
   /**
    * The list of listeners that are notified after a package event.
    *
-   * @var \Drupal\Composer\Plugin\Scaffold\PostPackageEventListenerInterface[]
+   * @var \Mautic\Composer\Plugin\Scaffold\PostPackageEventListenerInterface[]
    */
   protected $postPackageListeners = [];
 
@@ -122,7 +122,7 @@ class Handler {
    *   The package file mappings array keyed by destination path and the values
    *   are operation metadata arrays.
    *
-   * @return \Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface[]
+   * @return \Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface[]
    *   A list of scaffolding operation objects
    */
   protected function createScaffoldOperations(PackageInterface $package, array $package_file_mappings) {
@@ -150,7 +150,7 @@ class Handler {
 
     // Call any pre-scaffold scripts that may be defined.
     $dispatcher = new EventDispatcher($this->composer, $this->io);
-    $dispatcher->dispatch(self::PRE_DRUPAL_SCAFFOLD_CMD);
+    $dispatcher->dispatch(self::PRE_MAUTIC_SCAFFOLD_CMD);
 
     // Fetch the list of file mappings from each allowed package and normalize
     // them.
@@ -167,7 +167,7 @@ class Handler {
     $scaffold_results = ScaffoldFileCollection::process($scaffold_files, $this->io, $scaffold_options);
 
     // Generate an autoload file in the document root that includes the
-    // autoload.php file in the vendor directory, wherever that is. Drupal
+    // autoload.php file in the vendor directory, wherever that is. Mautic
     // requires this in order to easily locate relocated vendor dirs.
     $web_root = $this->manageOptions->getOptions()->getLocation('web-root');
     if (!GenerateAutoloadReferenceFile::autoloadFileCommitted($this->io, $this->rootPackageName(), $web_root)) {
@@ -179,7 +179,7 @@ class Handler {
     $gitIgnoreManager->manageIgnored($scaffold_results, $scaffold_options);
 
     // Call post-scaffold scripts.
-    $dispatcher->dispatch(self::POST_DRUPAL_SCAFFOLD_CMD);
+    $dispatcher->dispatch(self::POST_MAUTIC_SCAFFOLD_CMD);
   }
 
   /**
@@ -201,7 +201,7 @@ class Handler {
    *   A multidimensional array of file mappings, as returned by
    *   self::getAllowedPackages().
    *
-   * @return \Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface[]
+   * @return \Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface[]
    *   An array of destination paths => scaffold operation objects.
    */
   protected function getFileMappingsFromPackages(array $allowed_packages) {
@@ -218,7 +218,7 @@ class Handler {
    * @param \Composer\Package\PackageInterface $package
    *   The Composer package from which to get the file mappings.
    *
-   * @return \Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface[]
+   * @return \Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface[]
    *   An array of destination paths => scaffold operation objects.
    */
   protected function getPackageFileMappings(PackageInterface $package) {
@@ -227,9 +227,9 @@ class Handler {
       return $this->createScaffoldOperations($package, $options->fileMapping());
     }
     // Warn the user if they allow a package that does not have any scaffold
-    // files. We will ignore drupal/core, though, as it is implicitly allowed,
+    // files. We will ignore mautic/core, though, as it is implicitly allowed,
     // but might not have scaffold files (version 8.7.x and earlier).
-    if (!$options->hasAllowedPackages() && ($package->getName() != 'drupal/core')) {
+    if (!$options->hasAllowedPackages() && ($package->getName() != 'mautic/core')) {
       $this->io->writeError("The allowed package {$package->getName()} does not provide a file mapping for Composer Scaffold.");
     }
     return [];

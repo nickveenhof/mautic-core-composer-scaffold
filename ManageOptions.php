@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Composer\Plugin\Scaffold;
+namespace Mautic\Composer\Plugin\Scaffold;
 
 use Composer\Composer;
 use Composer\Package\PackageInterface;
@@ -10,7 +10,7 @@ use Composer\Util\Filesystem;
  * Per-project options from the 'extras' section of the composer.json file.
  *
  * Projects that describe scaffold files do so via their scaffold options.
- * This data is pulled from the 'drupal-scaffold' portion of the extras
+ * This data is pulled from the 'mautic-scaffold' portion of the extras
  * section of the project data.
  *
  * @internal
@@ -37,7 +37,7 @@ class ManageOptions {
   /**
    * Gets the root-level scaffold options for this project.
    *
-   * @return \Drupal\Composer\Plugin\Scaffold\ScaffoldOptions
+   * @return \Mautic\Composer\Plugin\Scaffold\ScaffoldOptions
    *   The scaffold options object.
    */
   public function getOptions() {
@@ -50,7 +50,7 @@ class ManageOptions {
    * @param \Composer\Package\PackageInterface $package
    *   The package to fetch the scaffold options from.
    *
-   * @return \Drupal\Composer\Plugin\Scaffold\ScaffoldOptions
+   * @return \Mautic\Composer\Plugin\Scaffold\ScaffoldOptions
    *   The scaffold options object.
    */
   public function packageOptions(PackageInterface $package) {
@@ -65,7 +65,7 @@ class ManageOptions {
    *
    * Note that only the root package may define locations.
    *
-   * @return \Drupal\Composer\Plugin\Scaffold\Interpolator
+   * @return \Mautic\Composer\Plugin\Scaffold\Interpolator
    *   Interpolator that will do replacements in a string using tokens in
    *   'locations' element.
    */

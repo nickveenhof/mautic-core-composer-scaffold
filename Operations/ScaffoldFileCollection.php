@@ -1,12 +1,12 @@
 <?php
 
-namespace Drupal\Composer\Plugin\Scaffold\Operations;
+namespace Mautic\Composer\Plugin\Scaffold\Operations;
 
 use Composer\IO\IOInterface;
-use Drupal\Composer\Plugin\Scaffold\Interpolator;
-use Drupal\Composer\Plugin\Scaffold\ScaffoldFileInfo;
-use Drupal\Composer\Plugin\Scaffold\ScaffoldFilePath;
-use Drupal\Composer\Plugin\Scaffold\ScaffoldOptions;
+use Mautic\Composer\Plugin\Scaffold\Interpolator;
+use Mautic\Composer\Plugin\Scaffold\ScaffoldFileInfo;
+use Mautic\Composer\Plugin\Scaffold\ScaffoldFilePath;
+use Mautic\Composer\Plugin\Scaffold\ScaffoldOptions;
 
 /**
  * Collection of scaffold files.
@@ -22,7 +22,7 @@ class ScaffoldFileCollection implements \IteratorAggregate {
    * scaffold files provided by that package. Each collection of scaffold files
    * is keyed by destination path.
    *
-   * @var \Drupal\Composer\Plugin\Scaffold\ScaffoldFileInfo[][]
+   * @var \Mautic\Composer\Plugin\Scaffold\ScaffoldFileInfo[][]
    */
   protected $scaffoldFilesByProject = [];
 
@@ -31,7 +31,7 @@ class ScaffoldFileCollection implements \IteratorAggregate {
    *
    * @param array $file_mappings
    *   A multidimensional array of file mappings.
-   * @param \Drupal\Composer\Plugin\Scaffold\Interpolator $location_replacements
+   * @param \Mautic\Composer\Plugin\Scaffold\Interpolator $location_replacements
    *   An object with the location mappings (e.g. [web-root]).
    */
   public function __construct(array $file_mappings, Interpolator $location_replacements) {
@@ -84,14 +84,14 @@ class ScaffoldFileCollection implements \IteratorAggregate {
   /**
    * Processes the iterator created by ScaffoldFileCollection::create().
    *
-   * @param \Drupal\Composer\Plugin\Scaffold\Operations\ScaffoldFileCollection $collection
+   * @param \Mautic\Composer\Plugin\Scaffold\Operations\ScaffoldFileCollection $collection
    *   The iterator to process.
    * @param \Composer\IO\IOInterface $io
    *   The Composer IO object.
-   * @param \Drupal\Composer\Plugin\Scaffold\ScaffoldOptions $scaffold_options
+   * @param \Mautic\Composer\Plugin\Scaffold\ScaffoldOptions $scaffold_options
    *   The scaffold options.
    *
-   * @return \Drupal\Composer\Plugin\Scaffold\Operations\ScaffoldResult[]
+   * @return \Mautic\Composer\Plugin\Scaffold\Operations\ScaffoldResult[]
    *   The results array.
    */
   public static function process(ScaffoldFileCollection $collection, IOInterface $io, ScaffoldOptions $scaffold_options) {

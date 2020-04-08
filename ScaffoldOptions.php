@@ -1,12 +1,12 @@
 <?php
 
-namespace Drupal\Composer\Plugin\Scaffold;
+namespace Mautic\Composer\Plugin\Scaffold;
 
 /**
  * Per-project options from the 'extras' section of the composer.json file.
  *
  * Projects that describe scaffold files do so via their scaffold options. This
- * data is pulled from the 'drupal-scaffold' portion of the extras section of
+ * data is pulled from the 'mautic-scaffold' portion of the extras section of
  * the project data.
  *
  * @internal
@@ -24,7 +24,7 @@ class ScaffoldOptions {
    * ScaffoldOptions constructor.
    *
    * @param array $options
-   *   The scaffold options taken from the 'drupal-scaffold' section.
+   *   The scaffold options taken from the 'mautic-scaffold' section.
    */
   protected function __construct(array $options) {
     $this->options = $options + [
@@ -51,7 +51,7 @@ class ScaffoldOptions {
    *   True if scaffold options have been declared
    */
   public static function hasOptions(array $extras) {
-    return array_key_exists('drupal-scaffold', $extras);
+    return array_key_exists('mautic-scaffold', $extras);
   }
 
   /**
@@ -64,7 +64,7 @@ class ScaffoldOptions {
    *   The scaffold options object representing the provided scaffold options
    */
   public static function create(array $extras) {
-    $options = static::hasOptions($extras) ? $extras['drupal-scaffold'] : [];
+    $options = static::hasOptions($extras) ? $extras['mautic-scaffold'] : [];
     return new self($options);
   }
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\Composer\Plugin\Scaffold;
+namespace Mautic\Composer\Plugin\Scaffold;
 
 use Composer\IO\IOInterface;
-use Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface;
+use Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface;
 
 /**
  * Data object that keeps track of one scaffold file.
@@ -20,24 +20,24 @@ class ScaffoldFileInfo {
   /**
    * The path to the destination.
    *
-   * @var \Drupal\Composer\Plugin\Scaffold\ScaffoldFilePath
+   * @var \Mautic\Composer\Plugin\Scaffold\ScaffoldFilePath
    */
   protected $destination;
 
   /**
    * The operation used to create the destination.
    *
-   * @var \Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface
+   * @var \Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface
    */
   protected $op;
 
   /**
    * Constructs a ScaffoldFileInfo object.
    *
-   * @param \Drupal\Composer\Plugin\Scaffold\ScaffoldFilePath $destination
+   * @param \Mautic\Composer\Plugin\Scaffold\ScaffoldFilePath $destination
    *   The full and relative paths to the destination file and the package
    *   defining it.
-   * @param \Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface $op
+   * @param \Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface $op
    *   Operations object that will handle scaffolding operations.
    */
   public function __construct(ScaffoldFilePath $destination, OperationInterface $op) {
@@ -48,7 +48,7 @@ class ScaffoldFileInfo {
   /**
    * Gets the Scaffold operation.
    *
-   * @return \Drupal\Composer\Plugin\Scaffold\Operations\OperationInterface
+   * @return \Mautic\Composer\Plugin\Scaffold\Operations\OperationInterface
    *   Operations object that handles scaffolding (copy, make symlink, etc).
    */
   public function op() {
@@ -68,7 +68,7 @@ class ScaffoldFileInfo {
   /**
    * Gets the destination.
    *
-   * @return \Drupal\Composer\Plugin\Scaffold\ScaffoldFilePath
+   * @return \Mautic\Composer\Plugin\Scaffold\ScaffoldFilePath
    *   The scaffold path to the destination file.
    */
   public function destination() {
@@ -112,11 +112,11 @@ class ScaffoldFileInfo {
    *
    * @param \Composer\IO\IOInterface $io
    *   The scaffold file to be processed.
-   * @param \Drupal\Composer\Plugin\Scaffold\ScaffoldOptions $options
+   * @param \Mautic\Composer\Plugin\Scaffold\ScaffoldOptions $options
    *   Assorted operational options, e.g. whether the destination should be a
    *   symlink.
    *
-   * @return \Drupal\Composer\Plugin\Scaffold\Operations\ScaffoldResult
+   * @return \Mautic\Composer\Plugin\Scaffold\Operations\ScaffoldResult
    *   The scaffold result.
    */
   public function process(IOInterface $io, ScaffoldOptions $options) {

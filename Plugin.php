@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Composer\Plugin\Scaffold;
+namespace Mautic\Composer\Plugin\Scaffold;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
@@ -14,10 +14,10 @@ use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
-use Drupal\Composer\Plugin\Scaffold\CommandProvider as ScaffoldCommandProvider;
+use Mautic\Composer\Plugin\Scaffold\CommandProvider as ScaffoldCommandProvider;
 
 /**
- * Composer plugin for handling drupal scaffold.
+ * Composer plugin for handling mautic scaffold.
  *
  * @internal
  */
@@ -26,7 +26,7 @@ class Plugin implements PluginInterface, EventSubscriberInterface, Capable {
   /**
    * The Composer Scaffold handler.
    *
-   * @var \Drupal\Composer\Plugin\Scaffold\Handler
+   * @var \Mautic\Composer\Plugin\Scaffold\Handler
    */
   protected $handler;
 
